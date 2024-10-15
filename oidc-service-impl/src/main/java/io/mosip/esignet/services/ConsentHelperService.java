@@ -115,9 +115,14 @@ public class ConsentHelperService {
             userConsent.setSignature(signature);
             List<String> permittedScopes = transaction.getPermittedScopes();
             List<String> requestedAuthorizeScopes = transaction.getRequestedAuthorizeScopes();
+            // Validate requestedAuthorizeScopes against a fixed list of valid scopes
+            List<String> validScopes = getValidScopes();
+            requestedAuthorizeScopes = requestedAuthorizeScopes != null ? requestedAuthorizeScopes.stream()
+                    .filter(validScopes::contains)
+                    .collect(Collectors.toList()) : Collections.emptyList();
             // defaulting the essential boolean flag as false
-            Map<String, Boolean> authorizeScopes = requestedAuthorizeScopes != null ? requestedAuthorizeScopes.stream()
-                    .collect(Collectors.toMap(Function.identity(), s->false)) : Collections.emptyMap();
+            Map<String, Boolean> authorizeScopes = requestedAuthorizeScopes.stream()
+                    .collect(Collectors.toMap(Function.identity(), s->false));
             userConsent.setAuthorizationScopes(authorizeScopes);
             userConsent.setAcceptedClaims(acceptedClaims);
             userConsent.setPermittedScopes(permittedScopes);
@@ -130,6 +135,11 @@ public class ConsentHelperService {
             consentService.saveUserConsent(userConsent);
             auditWrapper.logAudit(Action.UPDATE_USER_CONSENT, ActionStatus.SUCCESS, AuditHelper.buildAuditDto(transaction.getTransactionId(),transaction),null);
         }
+    }
+
+    // Method to return a fixed list of valid scopes
+    private List<String> getValidScopes() {
+        return List.of("scope1", "scope2", "scope3"); // Replace with actual valid scopes
     }
 
     public Map<String, List<Map<String, Object>>> normalizeUserInfoClaims(Map<String, List<Map<String, Object>>> claims){
