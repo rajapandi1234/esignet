@@ -89,7 +89,7 @@
 		<maven.sonar.plugin.version>3.7.0.1746</maven.sonar.plugin.version>
 		<maven.javadoc.version>3.2.0</maven.javadoc.version>
 		<maven-shade-plugin.version>2.3</maven-shade-plugin.version>
-		<jackson.databind>2.15.0</jackson.databind>
+		<jackson.databind>2.19.1</jackson.databind>
 		<spring-cloud.version>Hoxton.SR8</spring-cloud.version>
 		<spring.boot.version>2.3.6.RELEASE</spring.boot.version>
 
