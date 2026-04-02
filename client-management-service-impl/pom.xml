@@ -15,7 +15,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <esignet.core.version>${project.version}</esignet.core.version>
+        <esignet.core.version>1.7.0</esignet.core.version>
     </properties>
 
     <dependencies>
